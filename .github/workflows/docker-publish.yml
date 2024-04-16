@@ -12,6 +12,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  REPO_NAME: r3m1n0x/kimage
 
 
 jobs:
@@ -34,5 +35,5 @@ jobs:
 
       - name: 'Build Inventory Image'
         run: |
-          docker build . --tag ghcr.io/${{github.repository,,}}:latest
-          docker push ghcr.io/${{github.repository,,}}:latest
+          docker build . --tag ghcr.io/${{ env.REPO_NAME }}:latest
+          docker push ghcr.io/${{ env.REPO_NAME }}:latest
