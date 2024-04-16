@@ -1,0 +1,36 @@
+FROM ubuntu:jammy
+
+ARG ARCH="arm64"
+ARG ETCD_VERSION="3.5.13"
+
+RUN apt update
+
+RUN apt install -y  --no-install-recommends \ 
+                    apt-transport-https \
+                    ca-certificates \
+                    wget \
+                    curl \
+                    iputils-ping \
+                    dnsutils \
+                    net-tools \
+                    vim \
+                    nano \
+                    
+                    git && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt clean
+
+RUN echo ${ARCH}
+RUN echo $ARCH
+
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+RUN curl https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-${ARCH}.tar.gz --output /tmp/etcd.tar.gz
+RUN tar zxvf /tmp/etcd.tar.gz -C /tmp && \
+    mv /tmp/etcd-v${ETCD_VERSION}-linux-${ARCH}/etcdctl /usr/local/bin/etcdctl && \
+    chmod a+x /usr/local/bin/etcdctl
+
+WORKDIR /root
+
+CMD ["/bin/bash"]
