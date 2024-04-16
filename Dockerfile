@@ -5,6 +5,7 @@ RUN apk update && apk upgrade
 RUN apk add bash \
             curl \
             vim \
+            nmap \
             bind-tools \
             kubectl
 
