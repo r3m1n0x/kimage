@@ -1,14 +1,16 @@
-FROM alpine:3.19.1
+FROM alpine:3.20.3
 
 RUN apk update && apk upgrade
-
-RUN apk add bash \
-            curl \
-            vim \
-            nmap \
-            bind-tools \
-            kubectl
-
+RUN apk add --no-cache bash \
+                        curl \
+                        wget \
+                        git \
+                        vim \
+                        nmap \
+                        bind-tools \
+                        kubectl \
+                        helm
+            
 WORKDIR /root
 
 CMD ["/bin/bash"]
